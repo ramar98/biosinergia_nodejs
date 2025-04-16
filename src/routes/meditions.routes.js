@@ -13,7 +13,7 @@ const router = Router();
 router.get("/meditions", getMeditions);
 
 // GET An Medition
-router.get("/meditions/:id", getMedition);
+router.get("/meditions/:micro_id", getMedition);
 
 // DELETE An Medition
 router.delete("/meditions/:id", deleteMedition);

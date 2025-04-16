@@ -11,9 +11,9 @@ export const getMeditions = async (req, res) => {
 
 export const getMedition = async (req, res) => {
   try {
-    const { id } = req.params;
-    const [rows] = await pool.query("SELECT * FROM medition WHERE id = ?", [
-      id,
+    const { micro_id } = req.params;
+    const [rows] = await pool.query("SELECT * FROM medition WHERE micro_id = ? ORDER BY created_at DESCLIMIT 1", [
+      micro_id,
     ]);
 
     if (rows.length <= 0) {
