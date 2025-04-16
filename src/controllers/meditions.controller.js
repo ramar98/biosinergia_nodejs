@@ -5,7 +5,7 @@ export const getMeditions = async (req, res) => {
     const [rows] = await pool.query("SELECT * FROM medition");
     res.json(rows);
   } catch (error) {
-    return res.status(500).json({ message: "sdsad" });
+    return res.status(500).json({ message: "somethings goes wrong" });
   }
 };
 
