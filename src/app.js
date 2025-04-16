@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import cors from "cors";
 
 import plantsRoutes from "./routes/plants.routes.js";
 import usersRoutes from "./routes/users.routes.js";
