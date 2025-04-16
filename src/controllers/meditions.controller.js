@@ -12,7 +12,7 @@ export const getMeditions = async (req, res) => {
 export const getMedition = async (req, res) => {
   try {
     const { micro_id } = req.params;
-    const [rows] = await pool.query("SELECT * FROM medition WHERE micro_id = ? ORDER BY created_at DESCLIMIT 1", [
+    const [rows] = await pool.query("SELECT * FROM medition WHERE micro_id = ? ORDER BY created_at DESC LIMIT 1", [
       micro_id,
     ]);
 
