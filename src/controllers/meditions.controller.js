@@ -43,17 +43,47 @@ export const deleteMedition = async (req, res) => {
 
 export const createMedition = async (req, res) => {
   try {
-    const { plant_id, humidity, temperature, bomsts, humedadsuelo } = req.body;
-    const date = new Time(); // Calculate the current date and time
-    const [rows] = await pool.query(
-      "INSERT INTO Medition (plant_id, date, humidity, temperature, bomsts, humedadsuelo) VALUES (?, ?, ?, ?, ?, ?)",
-      [plant_id, date, humidity, temperature, bomsts, humedadsuelo]
+    const {
+      dioxido_carbono,
+      soil_temperature,
+      soil_humidity,
+      room_temperature,
+      room_humidity,
+      micro_id
+    } = req.body;
+
+    const created_at = new Date();
+
+    const [result] = await pool.query(
+      `INSERT INTO medition (
+        dioxido_carbono,
+        soil_temperature,
+        soil_humidity,
+        room_temperature,
+        room_humidity,
+        micro_id
+      ) VALUES (?, ?, ?, ?, ?, ?)`,
+      [
+        dioxido_carbono,
+        soil_temperature,
+        soil_humidity,
+        room_temperature,
+        room_humidity,
+        micro_id
+      ]
     );
-    res.status(201).json({ id: rows.insertId, plant_id, date, humidity, temperature, bomsts, humedadsuelo });
+
+    const [rows] = await pool.query("SELECT * FROM medition WHERE id = ?", [
+      result.insertId
+    ]);
+
+    res.status(201).json(rows[0]);
   } catch (error) {
-    return res.status(500).json({ message: "Something goes wrong" });
+    console.error(error);
+    return res.status(500).json({ message: "Something went wrong" });
   }
 };
+
 
 export const updateMedition = async (req, res) => {
   try {
