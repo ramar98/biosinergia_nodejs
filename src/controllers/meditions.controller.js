@@ -49,7 +49,7 @@ export const createMedition = async (req, res) => {
       "INSERT INTO Medition (plant_id, date, humidity, temperature, bomsts, humedadsuelo) VALUES (?, ?, ?, ?, ?, ?)",
       [plant_id, date, humidity, temperature, bomsts, humedadsuelo]
     );
-    res.status(201).json({ id: rows.insertId, plant_id, date, humidity, temperature, bomsts, humedadsuelo});
+    res.status(201).json({ id: rows.insertId, plant_id, date, humidity, temperature, bomsts, humedadsuelo });
   } catch (error) {
     return res.status(500).json({ message: "Something goes wrong" });
   }
@@ -58,20 +58,31 @@ export const createMedition = async (req, res) => {
 export const updateMedition = async (req, res) => {
   try {
     const { id } = req.params;
-    const { plant_id, humidity, temperature, bomsts, humedadsuelo, forcebomsts } = req.body;
-    const date = new Date();
+    const {
+      micro_id,
+      dioxido_carbono,
+      soil_temperature,
+      soil_humidity,
+      room_temperature,
+      room_humidity,
+    } = req.body;
 
     const [result] = await pool.query(
-      `UPDATE medition 
-       SET plant_id = IFNULL(?, plant_id), 
-         date = IFNULL(?, date), 
-         humidity = IFNULL(?, humidity), 
-         temperature = IFNULL(?, temperature), 
-         bomsts = IFNULL(?, bomsts), 
-         humedadsuelo = IFNULL(?, humedadsuelo),
-         forcebomsts = IFNULL(?, forcebomsts) 
-       WHERE id = ?`,
-      [plant_id, date, humidity, temperature, bomsts, humedadsuelo, forcebomsts, id]
+      `UPDATE medition  
+       SET dioxido_carbono = IFNULL(?, dioxido_carbono), 
+           soil_temperature = IFNULL(?, soil_temperature), 
+           soil_humidity = IFNULL(?, soil_humidity), 
+           room_temperature = IFNULL(?, room_temperature), 
+           room_humidity = IFNULL(?, room_humidity)
+       WHERE micro_id = ?`,
+      [
+        dioxido_carbono,
+        soil_temperature,
+        soil_humidity,
+        room_temperature,
+        room_humidity,
+        micro_id
+      ]
     );
 
     if (result.affectedRows === 0)
@@ -83,6 +94,8 @@ export const updateMedition = async (req, res) => {
 
     res.json(rows[0]);
   } catch (error) {
-    return res.status(500).json({ message: "Something goes wrong" });
+    console.error(error);
+    return res.status(500).json({ message: "Something went wrong" });
   }
 };
+
