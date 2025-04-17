@@ -57,9 +57,8 @@ export const createMedition = async (req, res) => {
 
 export const updateMedition = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { micro_id } = req.params;
     const {
-      micro_id,
       dioxido_carbono,
       soil_temperature,
       soil_humidity,
@@ -88,8 +87,8 @@ export const updateMedition = async (req, res) => {
     if (result.affectedRows === 0)
       return res.status(404).json({ message: "Medition not found" });
 
-    const [rows] = await pool.query("SELECT * FROM medition WHERE id = ?", [
-      id,
+    const [rows] = await pool.query("SELECT * FROM medition WHERE micro_id = ?", [
+      micro_id,
     ]);
 
     res.json(rows[0]);
