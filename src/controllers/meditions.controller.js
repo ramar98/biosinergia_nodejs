@@ -52,8 +52,6 @@ export const createMedition = async (req, res) => {
       micro_id
     } = req.body;
 
-    const created_at = new Date();
-
     const [result] = await pool.query(
       `INSERT INTO medition (
         dioxido_carbono,

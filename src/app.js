@@ -8,6 +8,7 @@ import meditionsRoutes from "./routes/meditions.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import indexRoutes from "./routes/index.routes.js";
 import controlsRoutes from "./routes/controls.routes.js"
+import microsRoutes from "./routes/micros.routes.js"
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use("/api", plantsRoutes);
 app.use("/api", meditionsRoutes);
 app.use("/api", authRoutes);
 app.use("/api", controlsRoutes)
+app.use("/api", microsRoutes)
 
 app.use((req, res, next) => {
   res.status(404).json({ message: "Not found" });
