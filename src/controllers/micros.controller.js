@@ -23,7 +23,8 @@ export const getMicro_id = async (req, res) => {
       return res.status(404).json({ message: "Micro no encontrado" });
     }
 
-    res.json(microRows[0]);
+    // Devolver solo el número del id
+    res.json(microRows[0].id);
   } catch (error) {
     console.error("Error al obtener el micro_id:", error);
     return res.status(500).json({ message: "Error del servidor" });
