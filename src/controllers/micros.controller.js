@@ -13,13 +13,9 @@ export const getMicro_id = async (req, res) => {
   try {
     const { mac, plant_name } = req.body;
 
-    if (!mac || !plant_name) {
-      return res.status(400).json({ message: "Faltan mac o plant_name en el body" });
-    }
-
     // Buscar el micro_id en la tabla 'micro'
     const [microRows] = await pool.query(
-      "SELECT micro_id FROM micro WHERE mac = ? AND plant_name = ?",
+      "SELECT id FROM micro WHERE mac = ? AND plant_name = ?",
       [mac, plant_name]
     );
 
