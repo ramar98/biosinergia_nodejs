@@ -3,12 +3,12 @@ import bcrypt from "bcrypt";
 
 
 export const login = async (req, res) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     try {
         const [rows] = await pool.query(
-            "SELECT * FROM user WHERE email = ?",
-            [email]
+            "SELECT * FROM user WHERE username = ?",
+            [username]
         );
 
         if (rows.length === 0) {
