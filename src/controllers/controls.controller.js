@@ -29,7 +29,7 @@ export const getControl = async (req, res) => {
 export const updateControl = async (req, res) => {
   try {
     const { micro_id } = req.params;
-    const { fan, extractor, intractor, light, watering_1, watering_2 } = req.body;
+    const { fan, extractor, intractor, light, watering_1, watering_2, heating } = req.body;
 
     const [result] = await pool.query(
       `UPDATE control  
@@ -39,15 +39,16 @@ export const updateControl = async (req, res) => {
            light = IFNULL(?, light), 
            watering_1 = IFNULL(?, watering_1),
            watering_2 = IFNULL(?, watering_2),
+           heating = IFNULL(?, heating),
        WHERE micro_id = ?`,
-      [fan, extractor, intractor, light, watering_1, watering_2, micro_id]
+      [fan, extractor, intractor, light, watering_1, watering_2, heating, micro_id]
     );
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Control not found" });
     }
 
-    const [rows] = await pool.query("SELECT * FROM control WHERE micro_id = ?", [id]);
+    const [rows] = await pool.query("SELECT * FROM control WHERE micro_id = ?", [micro_id]);
 
     res.json(rows[0]);
   } catch (error) {
