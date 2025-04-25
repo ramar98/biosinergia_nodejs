@@ -46,7 +46,7 @@ export const updateControl = async (req, res) => {
       return res.status(404).json({ message: "Control not found" });
     }
 
-    const [rows] = await pool.query("SELECT * FROM control WHERE id = ?", [id]);
+    const [rows] = await pool.query("SELECT * FROM control WHERE micro_id = ?", [id]);
 
     res.json(rows[0]);
   } catch (error) {
