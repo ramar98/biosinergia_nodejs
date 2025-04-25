@@ -29,7 +29,7 @@ export const getControl = async (req, res) => {
 export const updateControl = async (req, res) => {
   try {
     const { micro_id } = req.params;
-    const { fan, extractor, intractor, light, watering_1, watering_2, heating } = req.body;
+    const { fan, extractor, intractor, light, watering_1, watering_2, heating, mode_auto } = req.body;
 
     const [result] = await pool.query(
       `UPDATE control  
@@ -42,7 +42,7 @@ export const updateControl = async (req, res) => {
            heating = IFNULL(?, heating),
            mode_auto = IFNULL(?, mode_auto)
        WHERE micro_id = ?`,
-      [fan, extractor, intractor, light, watering_1, watering_2, heating, micro_id]
+      [fan, extractor, intractor, light, watering_1, watering_2, heating, mode_auto, micro_id]
     );
 
     if (result.affectedRows === 0) {
