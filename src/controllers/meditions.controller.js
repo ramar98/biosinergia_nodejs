@@ -57,9 +57,9 @@ export const createMedition = async (req, res) => {
     // Reemplazamos null/undefined por 0
     const values = [
       dioxido_carbono,
-      soil_temperature_1,
-      soil_temperature_2,
-      soil_humidity,
+      soil_humidity_1,
+      soil_humidity_2,
+      soil_temperature,
       room_temperature,
       room_humidity,
       micro_id
