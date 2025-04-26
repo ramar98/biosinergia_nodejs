@@ -43,37 +43,45 @@ export const deleteMedition = async (req, res) => {
 
 export const createMedition = async (req, res) => {
   try {
+    // Desestructuramos
     const {
       dioxido_carbono,
-      soil_temperature,
+      soil_temperature_1,
+      soil_temperature_2,
       soil_humidity,
       room_temperature,
       room_humidity,
       micro_id
     } = req.body;
 
+    // Reemplazamos null/undefined por 0
+    const values = [
+      dioxido_carbono,
+      soil_temperature_1,
+      soil_temperature_2,
+      soil_humidity,
+      room_temperature,
+      room_humidity,
+      micro_id
+    ].map(v => (v == null ? 0 : v));
+
     const [result] = await pool.query(
       `INSERT INTO medition (
         dioxido_carbono,
-        soil_temperature,
+        soil_temperature_1,
+        soil_temperature_2,
         soil_humidity,
         room_temperature,
         room_humidity,
         micro_id
-      ) VALUES (?, ?, ?, ?, ?, ?)`,
-      [
-        dioxido_carbono,
-        soil_temperature,
-        soil_humidity,
-        room_temperature,
-        room_humidity,
-        micro_id
-      ]
+      ) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      values
     );
 
-    const [rows] = await pool.query("SELECT * FROM medition WHERE id = ?", [
-      result.insertId
-    ]);
+    const [rows] = await pool.query(
+      "SELECT * FROM medition WHERE id = ?",
+      [result.insertId]
+    );
 
     res.status(201).json(rows[0]);
   } catch (error) {
@@ -81,6 +89,7 @@ export const createMedition = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
+
 
 
 export const updateMedition = async (req, res) => {
