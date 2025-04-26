@@ -46,9 +46,9 @@ export const createMedition = async (req, res) => {
     // Desestructuramos
     const {
       dioxido_carbono,
-      soil_humidity_1,
-      soil_humidity_2,
-      soil_temperature,
+      soil_temperature_1,
+      soil_temperature_2,
+      soil_humidity,
       room_temperature,
       room_humidity,
       micro_id
@@ -68,22 +68,14 @@ export const createMedition = async (req, res) => {
     const [result] = await pool.query(
       `INSERT INTO medition (
         dioxido_carbono,
-        soil_humidity_1,
-        soil_humidity_2,
-        soil_temperature,
+        soil_temperature_1,
+        soil_temperature_2,
+        soil_humidity,
         room_temperature,
         room_humidity,
         micro_id
       ) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [
-        dioxido_carbono,
-        soil_humidity_1,
-        soil_humidity_2,
-        soil_temperature,
-        room_temperature,
-        room_humidity,
-        micro_id
-      ]
+      values
     );
 
     const [rows] = await pool.query(
