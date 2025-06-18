@@ -42,7 +42,7 @@ export const updateControl = async (req, res) => {
            heating = IFNULL(?, heating),
            mode_auto = IFNULL(?, mode_auto),
            actuador_1 = IFNULL(?, actuador_1),
-           actuador_2 = IFNULL(?, actuador_2),
+           actuador_2 = IFNULL(?, actuador_2)
        WHERE micro_id = ?`,
       [fan, extractor, intractor, light, watering_1, watering_2, heating, mode_auto, actuador_1, actuador_2, micro_id]
     );
